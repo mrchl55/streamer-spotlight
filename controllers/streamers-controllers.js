@@ -19,51 +19,35 @@ let DUMMY_STREAMERS = [
 ];
 const getAllStreamers = async (req, res, next) => {
     let streamer;
-    try{
+    try {
         streamer = await Streamer.find();
-    }catch(err){
+    } catch (err) {
 
         const error = new HttpError('Something went wrong, could not find streamers', 500)
         return next(error)
     }
     if (!streamer) {
-        const error =  new HttpError('Sorry! No streamers to display!', 404);
+        const error = new HttpError('Sorry! No streamers to display!', 404);
         return next(error)
     }
 
     res.json({streamer});
 };
-const getStreamerById = (req, res, next) => {
+const getStreamerById = async (req, res, next) => {
     const streamerId = req.params.sid;
+    let streamer;
+    try {
+        streamer = await Streamer.findById(streamerId);
 
-    const streamer = DUMMY_STREAMERS.find(p => {
-        return p.id === streamerId;
-    });
-
-    if (!streamer) {
-        throw new HttpError('Could not find a streamer for the provided id.', 404);
+    } catch (err) {
+        const error = new HttpError('Could not find a streamer for the provided id.', 404);
+        return next(error)
     }
 
     res.json({streamer});
 };
 
 
-
-const getStreamersByUserId = (req, res, next) => {
-    const userId = req.params.uid;
-
-    const streamers = DUMMY_STREAMERS.filter(p => {
-        return p.creator === userId;
-    });
-
-    if (!streamers || streamers.length === 0) {
-        return next(
-            new HttpError('Could not find streamers for the provided user id.', 404)
-        );
-    }
-
-    res.json({streamers});
-};
 
 const createStreamer = async (req, res, next) => {
     const errors = validationResult(req);
@@ -88,7 +72,6 @@ const createStreamer = async (req, res, next) => {
         const error = new HttpError('Creating streamer failed', 500)
         return next(error)
     }
-    DUMMY_STREAMERS.push(createdStreamer);
 
     res.status(201).json({streamer: createdStreamer});
 };
@@ -96,6 +79,5 @@ const createStreamer = async (req, res, next) => {
 
 exports.getAllStreamers = getAllStreamers;
 exports.getStreamerById = getStreamerById;
-exports.getStreamersByUserId = getStreamersByUserId;
 exports.createStreamer = createStreamer;
 
