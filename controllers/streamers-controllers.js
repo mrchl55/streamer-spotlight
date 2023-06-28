@@ -3,20 +3,6 @@ const {validationResult} = require('express-validator');
 
 const HttpError = require('../models/http-error');
 const Streamer = require('../models/streamer')
-let DUMMY_STREAMERS = [
-    {
-        id: 's1',
-        name: 'Streamer 1',
-        platform: 'YouTube',
-        description: 'One of the most famous streamers in the world!',
-        image: 'https://static-cdn.jtvnw.net/jtv_user_pictures/asmongold-profile_image-f7ddcbd0332f5d28-300x300.png',
-        votes: {
-            upvotes: 2,
-            downvotes: 5,
-        }
-
-    }
-];
 const getAllStreamers = async (req, res, next) => {
     let streamer;
     try {
