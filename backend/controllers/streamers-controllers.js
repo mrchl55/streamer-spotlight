@@ -54,6 +54,7 @@ const createStreamer = async (req, res, next) => {
     try {
         await createdStreamer.save()
     } catch (err) {
+        console.log(err.message)
         const error = new HttpError('Creating streamer failed', 500)
         return next(error)
     }
@@ -61,12 +62,6 @@ const createStreamer = async (req, res, next) => {
     res.status(201).json({streamer: createdStreamer});
 };
 const updateStreamer = async (req, res, next) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return next(
-    //         new HttpError('Invalid inputs passed, please check your data.', 422)
-    //     );
-    // }
 
     const {votes} = req.body;
     const streamerId = req.params.sid;

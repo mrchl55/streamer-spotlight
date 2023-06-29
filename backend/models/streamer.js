@@ -12,8 +12,8 @@ const streamerSchema = new Schema({
     description: {type: String, required: true},
     image: {type: String, required: false},
     votes: {
-        upvotes: {type: Number, required: true},
-        downvotes: {type: Number, required: true}
+        upvotes: {type: Number, default: 0, required: false},
+        downvotes: {type: Number,  default: 0, required: false}
     },
 
 

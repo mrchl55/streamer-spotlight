@@ -1,25 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Route, Routes} from "react-router-dom";
+import StreamerSpotlight from "./streamers/pages/StreamerSpotlight";
+import Navigation from "./shared/components/Navigation";
+import StreamerSingle from "./streamers/pages/StreamerSingle";
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Routes>
+        <Route path='/' element={< Navigation />}>
+            <Route index element={<StreamerSpotlight />} />
+            <Route path='streamer/:sid' element={<StreamerSingle />} />
+        </Route>
+      </Routes>
   );
 }
 
