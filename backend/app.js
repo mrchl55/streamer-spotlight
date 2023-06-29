@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const HttpError = require('./models/http-error');
 const streamersRoutes = require('./routes/streamers-routes')
+const ACCESS_DATA = require("./util/access-variables");
 const app = express();
 
 app.use(bodyParser.json());
@@ -28,7 +29,7 @@ app.use((error, req, res, next) => {
     res.status(error.code || 500)
     res.json({message: error.message || 'An unknown error occurred!'});
 });
-const uri = "mongodb+srv://przemo:test@cluster0.vourema.mongodb.net/streamers?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${ACCESS_DATA.DB_USER}:${ACCESS_DATA.DB_PASSWORD}@cluster0.vourema.mongodb.net/${ACCESS_DATA.DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose
     .connect(uri)

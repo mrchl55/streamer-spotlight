@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react";
+import {useCallback, useState, useEffect} from "react";
 
 export const useHttpClient = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)

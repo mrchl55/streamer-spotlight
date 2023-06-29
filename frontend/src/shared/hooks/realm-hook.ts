@@ -1,17 +1,19 @@
 import *  as  Realm from "realm-web";
 import {useEffect, useState} from "react";
+import {ACCESS_DATA} from "../../util/access-variables";
+const {DB_NAME, COLLECTION_NAME, REALM_APP_NAME} = ACCESS_DATA
+const app = new Realm.App({id: `${REALM_APP_NAME}`});
 
-const app = new Realm.App({id: "application-0-jogza"});
 export const useRealm = () => {
     const [user, setUser] = useState<any>();
     const [streamers, setStreamers] = useState<any[]>([]);
     useEffect(() => {
+        console.log('changed')
         const login = async () => {
             const user = await app.logIn(Realm.Credentials.anonymous());
             setUser(user);
-            console.log('addingg', streamers)
             const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
-            const collection: any = mongodb.db("streamers").collection("streamers");
+            const collection: any = mongodb.db(`${DB_NAME}`).collection(`${COLLECTION_NAME}`);
             for await (const change of collection!.watch()) {
                 setStreamers(streamers => [...streamers, change]);
             }

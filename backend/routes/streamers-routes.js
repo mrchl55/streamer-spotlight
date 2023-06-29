@@ -20,6 +20,6 @@ router.post(
     streamersControllers.createStreamer
 );
 router.put(
-    '/:streamers/:sid/vote', streamersControllers.updateStreamer
+    '/streamers/:sid/vote', streamersControllers.updateStreamer
 );
 module.exports = router;
