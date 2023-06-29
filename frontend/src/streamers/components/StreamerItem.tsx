@@ -6,42 +6,41 @@ type StreamerItemProps = Streamer
 
 const StreamerItem: React.FC<StreamerItemProps> = props => {
     const {id, name, platform, description, image, votes = {upvotes: 0, downvotes: 0}} = props
-    const {isLoading, error, sendRequest} = useHttpClient()
+    const {sendRequest} = useHttpClient()
     const [currentUpVotes, setCurrentUpVotes] = useState<number>(votes.upvotes)
     const [currentDownVotes, setCurrentDownVotes] = useState<number>(votes.downvotes)
-        const updateVotes = useCallback(async (votes: {upvotes: number, downvotes: number}) => {
-            try{
-                const streamersData = await sendRequest(`http://localhost:5000/streamers/${id}/vote`, 'PUT', JSON.stringify({
-                    votes
-                }), {
-                    'Content-Type': 'application/json',
+    const updateVotes = useCallback(async (votes: { upvotes: number, downvotes: number }) => {
+        try {
+            const streamersData = await sendRequest(`http://localhost:5000/streamers/${id}/vote`, 'PUT', JSON.stringify({
+                votes
+            }), {
+                'Content-Type': 'application/json',
 
-                })
+            })
 
-            }catch (err: any){
+        } catch (err: any) {
 
-            }
+        }
 
-        }, [])
+    }, [])
 
 
-
-    if(!id){
+    if (!id) {
         return <div>Speaker doesn't exist</div>
     }
 
-    const voteUpHandler = () => {
-        setCurrentUpVotes(currentUpVotes+1)
-        updateVotes({
-            ...votes,
-            upvotes: currentUpVotes+1,
+    const voteUpHandler = async () => {
+        setCurrentUpVotes(currentUpVotes + 1)
+        await updateVotes({
+            downvotes: currentDownVotes,
+            upvotes: currentUpVotes + 1,
         })
     }
-    const voteDownHandler = () => {
-        setCurrentDownVotes(currentDownVotes-1)
-        updateVotes({
-            ...votes,
-            downvotes: currentDownVotes-1,
+    const voteDownHandler = async () => {
+        setCurrentDownVotes(currentDownVotes + 1)
+        await updateVotes({
+            upvotes: currentUpVotes,
+            downvotes: currentDownVotes + 1,
         })
     }
     return <div>
@@ -50,8 +49,12 @@ const StreamerItem: React.FC<StreamerItemProps> = props => {
         <img src={image}/>
         <div>{description}</div>
         <div>{platform}</div>
-        <div>{currentUpVotes}<button onClick={voteUpHandler}>Vote up</button></div>
-        <div>{currentDownVotes}<button onClick={voteDownHandler}>Vote down</button></div>
+        <div>{currentUpVotes}
+            <button onClick={voteUpHandler}>Vote up</button>
+        </div>
+        <div>{currentDownVotes}
+            <button onClick={voteDownHandler}>Vote down</button>
+        </div>
     </div>
 }
 export default StreamerItem
