@@ -1,12 +1,13 @@
 import {Streamer} from "../../models/streamer";
 import StreamerItem from "./StreamerItem";
+import classes from './StreamerList.module.scss'
 type StreamerListProps = {
     items: Streamer[]
 }
 
 const StreamerList: React.FC<StreamerListProps> = props => {
     const {items} = props
-    return <ul>
+    return <ul className={classes.streamerList}>
         {items?.length ? items.map(streamer => <StreamerItem id={streamer.id} key={streamer.id} name={streamer.name} platform={streamer.platform} description={streamer.description} image={streamer.image} votes={streamer.votes} />) : ''}
     </ul>
 }

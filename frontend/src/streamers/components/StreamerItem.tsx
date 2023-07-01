@@ -1,6 +1,7 @@
 import {Streamer} from "../../models/streamer";
 import {useCallback, useEffect, useState} from "react";
 import {useHttpClient} from "../../shared/hooks/http-hook";
+import classes from './StreamerItem.module.scss';
 
 type StreamerItemProps = Streamer
 
@@ -26,10 +27,11 @@ const StreamerItem: React.FC<StreamerItemProps> = props => {
 
 
     if (!id) {
-        return <div>Speaker doesn't exist</div>
+        return <div className={classes.streamer}>Speaker doesn't exist</div>
     }
 
-    const voteUpHandler = async () => {
+    const voteUpHandler = async (e: any) => {
+        e.preventDefault()
         setCurrentUpVotes(currentUpVotes + 1)
         await updateVotes({
             downvotes: currentDownVotes,
@@ -43,17 +45,22 @@ const StreamerItem: React.FC<StreamerItemProps> = props => {
             downvotes: currentDownVotes + 1,
         })
     }
-    return <div>
-        <div>{id}</div>
-        <div>{name}</div>
+    return <div className={classes.streamerItem}>
+        <div >{id}</div>
+        <div className={classes.name}>{name}</div>
         <img src={image}/>
         <div>{description}</div>
         <div>{platform}</div>
-        <div>{currentUpVotes}
+        <div className={classes.votes}>
+
+        <div>
             <button onClick={voteUpHandler}>Vote up</button>
+            <span>{currentUpVotes}</span>
         </div>
-        <div>{currentDownVotes}
-            <button onClick={voteDownHandler}>Vote down</button>
+        <div>
+            <button onClick={voteDownHandler}>Vote down</button><span>{currentDownVotes}</span>
+        </div>
+
         </div>
     </div>
 }

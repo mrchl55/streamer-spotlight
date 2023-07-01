@@ -6,7 +6,7 @@ type StreamerAddFormProps = {}
 const StreamerAddForm: React.FC<StreamerAddFormProps> = props => {
     const {isLoading, error, sendRequest} = useHttpClient()
     const [name, setName] = useState('')
-    const [platform, setPlatform] = useState('')
+    const [platform, setPlatform] = useState('Twitch')
     const [description, setDescription] = useState('')
 
     const onChangeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +44,7 @@ const StreamerAddForm: React.FC<StreamerAddFormProps> = props => {
     return <form onSubmit={onSubmitHandler}>
         <input name='name' value={name} placeholder='John' onChange={onChangeNameHandler}/>
         <select onChange={onChangePlatformHandler}>
+            <option selected={true} disabled>Choose plarform..</option>
             <option>Twitch</option>
             <option>YouTube</option>
             <option>TikTok</option>

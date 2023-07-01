@@ -3,11 +3,10 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Streamer} from "../../models/streamer";
 import {useHttpClient} from "../../shared/hooks/http-hook";
-type StreamerSingleProps = {
 
-}
+type StreamerSingleProps = {}
 const StreamerSingle: React.FC<StreamerSingleProps> = props => {
-const {sid} = useParams()
+    const {sid} = useParams()
     const [streamer, setStreamer] = useState<Streamer>({
         id: '', name: '', description: '', platform: ''
 
@@ -16,10 +15,10 @@ const {sid} = useParams()
     useEffect(() => {
 
         const getStreamers = async () => {
-            try{
+            try {
                 const streamerData = await sendRequest(`http://localhost:5000/streamer/${sid}`)
                 setStreamer(streamerData.streamer)
-            }catch (err: any){
+            } catch (err: any) {
 
             }
 
@@ -28,19 +27,18 @@ const {sid} = useParams()
 
 
     }, [sendRequest])
-    if(isLoading && !error){
+    if (isLoading && !error) {
         return <div>Loading...</div>
     }
-    if(!isLoading && error){
+    if (!isLoading && error) {
         return <div>Error occured...</div>
     }
-    if(!streamer){
+    if (!streamer) {
         return <div>Couldnt find streamer with this id</div>
 
     }
-const { id,  name, description, platform, votes, image} = streamer;
+    const {id, name, description, platform, votes, image} = streamer;
     return <div>
-        Single page
         <StreamerItem id={id} name={name} description={description} platform={platform} image={image} votes={votes}/>
     </div>
 }

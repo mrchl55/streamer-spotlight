@@ -1,28 +1,18 @@
 import {Outlet} from "react-router-dom";
+import classes from './Navigation.module.scss'
+import {NavLink} from 'react-router-dom'
 
-import {
-    NavigationContainer,
-    NavLinks,
-    NavLink,
-    LogoContainer,
-} from './Navigation.styles';
 type NavigationProps = {
 
 }
 const Navigation: React.FC<NavigationProps> = () => {
     return (
-        <>
-            <NavigationContainer>
-                <LogoContainer to='/'>
+        <div className={classes.navigation}>
 
-                </LogoContainer>
-                <NavLinks>
-                    <NavLink to='/shop'>SHOP</NavLink>
+                    <NavLink to='/streamers'>STREAMERS SPOTLIGHT</NavLink>
 
-                </NavLinks>
-            </NavigationContainer>
             <Outlet />
-        </>
+        </div>
     );
 };
 

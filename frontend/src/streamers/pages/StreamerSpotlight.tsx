@@ -8,29 +8,23 @@ import {useRealm} from "../../shared/hooks/realm-hook";
 type StreamerSpotlightProps = {}
 
 const StreamerSpotlight: React.FC<StreamerSpotlightProps> = props => {
-console.log('sporlight rerender')
     const streamersList = useRealm()
-    console.log(streamersList)
+    console.log('streamersList', streamersList)
     const [streamers, setStreamers] = useState<Streamer[]>([])
     const {isLoading, error, sendRequest} = useHttpClient()
     useEffect(() => {
-
         const getStreamers = async () => {
-            try{
+            try {
                 const streamersData = await sendRequest('http://localhost:5000/streamers')
                 console.log(streamersData)
                 setStreamers(streamersData.streamers)
-            }catch (err: any){
-
+            } catch (serr: any) {
             }
-
         }
         getStreamers()
 
 
     }, [sendRequest, streamersList])
-
-
 
 
     return <div>

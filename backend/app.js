@@ -4,18 +4,22 @@ const mongoose = require('mongoose')
 const HttpError = require('./models/http-error');
 const streamersRoutes = require('./routes/streamers-routes')
 const ACCESS_DATA = require("./util/access-variables");
+const cors = require('cors')
 const app = express();
+
+
+app.use(cors())
 
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization' )
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT')
-    next();
-})
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', '*')
+//     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization' )
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT')
+//     next();
+// })
 
-app.use('/', streamersRoutes);
+app.use('/', cors(), streamersRoutes);
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this route.', 404);
