@@ -9,16 +9,12 @@ export const useRealm = () => {
     const [user, setUser] = useState<any>();
     const [streamers, setStreamers] = useState<any[]>([]);
     useEffect(() => {
-        console.log('changed')
         const login = async () => {
             const user = await app.logIn(Realm.Credentials.anonymous());
             setUser(user);
             const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
             const collection: any = mongodb.db(`${DB_NAME}`).collection(`${COLLECTION_NAME}`);
             for await (const change of collection.watch()) {
-                console.log('change', change, streamers)
-                console.log('ehh', change.operationType)
-                console.log(change.operationType !== 'insert')
                 if (change.operationType !== 'insert') {
                     continue
                 }
@@ -27,7 +23,6 @@ export const useRealm = () => {
             }
         }
         login();
-        console.log('streamers changed', streamers)
     }, [streamers]);
 
     return streamers

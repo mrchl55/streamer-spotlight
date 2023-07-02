@@ -1,5 +1,6 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useHttpClient} from "../../shared/hooks/http-hook";
+import classes from './StreamerAddForm.module.scss'
 
 type StreamerAddFormProps = {}
 
@@ -22,7 +23,7 @@ const StreamerAddForm: React.FC<StreamerAddFormProps> = props => {
 
     const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        try{
+        try {
             const response = await sendRequest('http://localhost:5000/streamers', 'POST', JSON.stringify({
                 name,
                 platform,
@@ -31,20 +32,19 @@ const StreamerAddForm: React.FC<StreamerAddFormProps> = props => {
                 'Content-Type': 'application/json',
 
             })
-            console.log(response)
-        }catch (err: any){
+            if (response) {
+                setName('');
+                setDescription('')
+                setPlatform('Twitch')
+            }
+        } catch (err: any) {
 
         }
-
     }
-    useEffect(() => {
-        console.log(name, description, platform)
-    }, [sendRequest])
-
-    return <form onSubmit={onSubmitHandler}>
-        <input name='name' value={name} placeholder='John' onChange={onChangeNameHandler}/>
+    const isFormValid: boolean = (name === '' || description === '');
+    return <form onSubmit={onSubmitHandler} className={classes.form}>
+        <input name='name' value={name} placeholder='John Doe' onChange={onChangeNameHandler}/>
         <select onChange={onChangePlatformHandler}>
-            <option selected={true} disabled>Choose plarform..</option>
             <option>Twitch</option>
             <option>YouTube</option>
             <option>TikTok</option>
@@ -53,7 +53,7 @@ const StreamerAddForm: React.FC<StreamerAddFormProps> = props => {
         </select>
         <textarea name='description' value={description} placeholder='Most popular streamer of 2023'
                   onChange={onChangeDescriptionHandler}/>
-        <button type='submit'>Add</button>
+        <button disabled={isFormValid} type='submit'>Add</button>
     </form>
 }
 export default StreamerAddForm

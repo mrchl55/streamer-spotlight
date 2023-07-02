@@ -2,7 +2,8 @@ import {Streamer} from "../../models/streamer";
 import {useCallback, useEffect, useState} from "react";
 import {useHttpClient} from "../../shared/hooks/http-hook";
 import classes from './StreamerItem.module.scss';
-
+import like from '../../assets/like.svg'
+import dislike from '../../assets/dislike.svg'
 type StreamerItemProps = Streamer
 
 const StreamerItem: React.FC<StreamerItemProps> = props => {
@@ -46,19 +47,17 @@ const StreamerItem: React.FC<StreamerItemProps> = props => {
         })
     }
     return <div className={classes.streamerItem}>
-        <div >{id}</div>
         <div className={classes.name}>{name}</div>
         <img src={image}/>
         <div>{description}</div>
         <div>{platform}</div>
         <div className={classes.votes}>
-
-        <div>
-            <button onClick={voteUpHandler}>Vote up</button>
+        <div className={classes.like} >
+            <a onClick={voteUpHandler}><img src={like} /></a>
             <span>{currentUpVotes}</span>
         </div>
-        <div>
-            <button onClick={voteDownHandler}>Vote down</button><span>{currentDownVotes}</span>
+        <div className={classes.dislike} >
+            <a  onClick={voteDownHandler}><img src={dislike}/></a><span>{currentDownVotes}</span>
         </div>
 
         </div>

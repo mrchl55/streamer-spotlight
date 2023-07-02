@@ -1,4 +1,3 @@
-import {Outlet} from "react-router-dom";
 import classes from './Navigation.module.scss'
 import {NavLink} from 'react-router-dom'
 
@@ -11,7 +10,6 @@ const Navigation: React.FC<NavigationProps> = () => {
 
                     <NavLink to='/streamers'>STREAMERS SPOTLIGHT</NavLink>
 
-            <Outlet />
         </div>
     );
 };

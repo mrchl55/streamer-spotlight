@@ -7,13 +7,13 @@ const streamerSchema = new Schema({
         type: String, required: true,
     },
     platform: {
-        type: String, required: true,
+        type: String, default: 'Twitch', required: true,
     },
     description: {type: String, required: true},
     image: {type: String, required: false},
     votes: {
         upvotes: {type: Number, default: 0, required: false},
-        downvotes: {type: Number,  default: 0, required: false}
+        downvotes: {type: Number, default: 0, required: false}
     },
 
 

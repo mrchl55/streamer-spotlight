@@ -1,20 +1,26 @@
 import React from 'react';
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, Navigate} from "react-router-dom";
 import StreamerSpotlight from "./streamers/pages/StreamerSpotlight";
-import Navigation from "./shared/components/Navigation";
 import StreamerSingle from "./streamers/pages/StreamerSingle";
+import Wrapper from "./shared/components/Wrapper";
 
 function App() {
 
 
-  return (
-      <Routes>
-        <Route path='/' element={< Navigation />}>
-            <Route index element={<StreamerSpotlight />} />
-            <Route path='streamer/:sid' element={<StreamerSingle />} />
-        </Route>
-      </Routes>
-  );
+    return (
+        <Routes>
+            <Route path='/streamers' element={< Wrapper/>}>
+                <Route index element={<StreamerSpotlight/>}/>
+            </Route>
+            <Route path='/streamer/:sid' element={< Wrapper/>}>
+                <Route index element={<StreamerSingle/>}/>
+            </Route>
+            <Route
+                path="*"
+                element={<Navigate to="/streamers" replace/>}
+            />
+        </Routes>
+    );
 }
 
 export default App;

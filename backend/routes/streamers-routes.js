@@ -14,7 +14,7 @@ router.post(
         check('name')
             .not()
             .isEmpty(),
-        check('description').isLength({min: 5}),
+        check('description').not().isEmpty(),
 
     ],
     streamersControllers.createStreamer

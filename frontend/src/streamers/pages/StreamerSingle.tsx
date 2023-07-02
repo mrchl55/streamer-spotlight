@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Streamer} from "../../models/streamer";
 import {useHttpClient} from "../../shared/hooks/http-hook";
-
+import classes from './StreamerSingle.module.scss'
 type StreamerSingleProps = {}
 const StreamerSingle: React.FC<StreamerSingleProps> = props => {
     const {sid} = useParams()
@@ -38,7 +38,7 @@ const StreamerSingle: React.FC<StreamerSingleProps> = props => {
 
     }
     const {id, name, description, platform, votes, image} = streamer;
-    return <div>
+    return <div className={classes.single}>
         <StreamerItem id={id} name={name} description={description} platform={platform} image={image} votes={votes}/>
     </div>
 }

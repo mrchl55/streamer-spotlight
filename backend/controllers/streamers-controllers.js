@@ -68,7 +68,6 @@ const updateStreamer = async (req, res, next) => {
 
     let updatedStreamer;
     try {
-        console.log(streamerId)
         updatedStreamer = await Streamer.updateOne({_id: streamerId}, {
             votes
         })

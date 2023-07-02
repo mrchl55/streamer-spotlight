@@ -2,7 +2,7 @@ import {useCallback, useState, useEffect} from "react";
 
 export const useHttpClient = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [error, setError] = useState<boolean>(false)
+    const [error, setError] = useState<any>(false)
 
     const sendRequest = useCallback(async (url: string, method = 'GET', body: any = null, headers: any = {}) => {
         setIsLoading(true)

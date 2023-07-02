@@ -1,0 +1,12 @@
+.spotlight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  flex-direction: column;
+  color: white;
+
+  h3 {
+    text-align: center;
+  }
+}
